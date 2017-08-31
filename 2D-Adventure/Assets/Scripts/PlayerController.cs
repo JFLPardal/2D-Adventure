@@ -24,7 +24,10 @@ public class PlayerController : MonoBehaviour{
 
 	private bool canJump = true;
 	public bool canControl = true;
-	public static PlayerController playerInstance = null;
+	public static PlayerController instance = null;
+
+	[SerializeField]
+	private static float _health = 100f;
 
 	public static float health
 	{
@@ -40,8 +43,6 @@ public class PlayerController : MonoBehaviour{
 		}
 	}
 
-	[SerializeField]
-	private static float _health = 100f;
 
 	//-----------------------------------------------------------
 	void Awake()
@@ -49,7 +50,7 @@ public class PlayerController : MonoBehaviour{
 		rb = GetComponent<Rigidbody2D> ();
 		transform = GetComponent<Transform> ();
 
-		playerInstance = this;
+		instance = this;
 	}
 	//-------------------------------------------------------------
 	//is player grounded
@@ -113,12 +114,12 @@ public class PlayerController : MonoBehaviour{
 	//--------------------------------------------------------
 	void OnDestroy()
 	{
-		playerInstance = null;
+		instance = null;
 	}
 	//-------------------------------------------------------
 	static void Die()
 	{
-		Destroy (PlayerController.playerInstance.gameObject);
+		Destroy (PlayerController.instance.gameObject);
 	}
 	//------------------------------------------------------
 	//resets player back to defaults
